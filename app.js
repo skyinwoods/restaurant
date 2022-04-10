@@ -16,7 +16,7 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 // routes setting
-app.get('/restaurants', (req, res) => {
+app.get('/', (req, res) => {
   res.render('index', {restaurant: resList.results} )
 })
 
