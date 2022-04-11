@@ -77,21 +77,28 @@ app.post('/restaurants/:restaurant_id/edit', (req, res) => {
 })
 
 // 搜尋
-app.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-  const restaurants = resList.results.filter(restaurant => {
-    return restaurant.name.toLowerCase().includes(keyword.toLowerCase())
-  })
-  res.render('index', {restaurant: restaurants, keyword : keyword})
-})
+//app.get('/search', (req, res) => 
+//  const keyword = req.query.keyword
+//  console.log(keyword)
 
-// delete
+//  const restaurants = Rest.find(rests => {
+//    return rests.name.toLowerCase().includes(keyword.toLowerCase())
+//  })
+//  res.render('index', {restaurant: restaurants, keyword : keyword})
+//})
+
+// 刪除
 app.post('/restaurants/:restaurant_id/delete', (req, res) => {
   const id = req.params.restaurant_id
   return Rest.findById(id)
     .then(rest => rest.remove())
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
+})
+
+// 新增一筆資料
+app.get('/restaurants/new', (req, res) =>{
+  return res.render('new')
 })
 
 app.listen(port, () => {
