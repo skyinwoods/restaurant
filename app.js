@@ -41,6 +41,30 @@ app.get('/', (req, res) => {
     .catch(error => console.error(error))
 })
 
+// 新增一筆資料＿路由導到 new
+app.get('/restaurants/new', (req, res) =>{
+  return res.render('new')
+})
+
+// 新增一筆資料＿接住資料表單送往資料庫
+app.post('/rests', (req, res) => {
+  const id = req.body.id
+  const name = req.body.name
+  const name_en = req.body.name_en
+  const category = req.body.category
+  const image = req.body.image
+  const location = req.body.location
+  const phone = req.body.phone
+  const google_map = req.body.google_map
+  const rating = req.body.rating
+  const description = req.body.description // 從 req.body 拿出表單的資料
+  return Rest.create({id ,name, name_en, category,image, location, phone, google_map ,rating,description })// 存入資料庫
+    .then(() => res.redirect('/'))// 新增完成後導回首頁
+    .catch(error => console.log(error))
+})
+
+
+
 // 單個餐廳_show
 app.get('/restaurants/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
@@ -96,10 +120,7 @@ app.post('/restaurants/:restaurant_id/delete', (req, res) => {
     .catch(error => console.log(error))
 })
 
-// 新增一筆資料
-app.get('/restaurants/new', (req, res) =>{
-  return res.render('new')
-})
+
 
 app.listen(port, () => {
   console.log(`Express is listening on localhost: ${port}`)

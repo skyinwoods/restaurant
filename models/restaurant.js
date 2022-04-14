@@ -45,3 +45,4 @@ const restSchema = new Schema({
   }
 })
 module.exports = mongoose.model('Rest', restSchema)
+// Rest 決定 資料庫的 rest
