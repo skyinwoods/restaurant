@@ -37,6 +37,7 @@ app.use(express.static('public'))
 app.get('/', (req, res) => {
   Rest.find() // 取出 Rest model 裡所有的資料
     .lean()
+    .sort({name: 'asc'})
     .then(rests => res.render('index', {rests}))
     .catch(error => console.error(error))
 })
