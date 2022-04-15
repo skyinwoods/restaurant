@@ -9,7 +9,7 @@ const Rest = require('../../models/restaurant')
 router.get('/', (req, res) => {
   Rest.find() // 取出 Rest model 裡所有的資料
     .lean()
-    .sort({name: 'asc'})
+    .sort({ name: 'asc'})
     .then(rests => res.render('index', {rests}))
     .catch(error => console.error(error))
 })
