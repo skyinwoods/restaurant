@@ -42,6 +42,10 @@ const restSchema = new Schema({
   description:{
     type: String, // 型別是字串
     required: true // 必填欄位
+  },
+  isDone:{
+    type: Boolean,
+    default: false //預設完成狀態為 false
   }
 })
 module.exports = mongoose.model('Rest', restSchema)

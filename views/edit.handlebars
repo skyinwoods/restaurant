@@ -1,4 +1,5 @@
 <form action="/restaurants/{{ rest._id }}/edit" method="POST">
+  <input type="checkbox" name="isDone" {{#if rest.isDone}} checked{{/if}}>
   <input type="text" placeholder="name" name="name" value="{{ rest.name }}">
   <input type="text" placeholder="phone" name="phone" value="{{ rest.phone }}">
   <input type="text" placeholder="location" name="location" value="{{ rest.location }}">

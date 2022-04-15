@@ -7,6 +7,7 @@
       <form action="/restaurants/{{ rest._id }}/delete" method="POST" style="display: inline;">
             <button type="submit">delete</button>
       </form>
+      <input type="checkbox" name="isDone" {{#if rest.isDone}} checked{{/if}} disabled>
       <p class="mb-1">
         <span class="text-secondary">
           <i class="fas fa-utensils pr-2"></i>

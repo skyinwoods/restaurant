@@ -48,16 +48,8 @@ app.get('/restaurants/new', (req, res) =>{
 
 // 新增一筆資料＿接住資料表單送往資料庫
 app.post('/rests', (req, res) => {
-  const id = req.body.id
-  const name = req.body.name
-  const name_en = req.body.name_en
-  const category = req.body.category
-  const image = req.body.image
-  const location = req.body.location
-  const phone = req.body.phone
-  const google_map = req.body.google_map
-  const rating = req.body.rating
-  const description = req.body.description // 從 req.body 拿出表單的資料
+  // 從 req.body 拿出表單的資料
+  const {id,name, name_en, category, image, location,phone, google_map, rating, description  } = req.body // 解構賦值：優化程式碼
   return Rest.create({id ,name, name_en, category,image, location, phone, google_map ,rating,description })// 存入資料庫
     .then(() => res.redirect('/'))// 新增完成後導回首頁
     .catch(error => console.log(error))
@@ -86,14 +78,13 @@ app.get('/restaurants/:restaurant_id/edit', (req, res) => {
 // 編輯單個餐廳_update
 app.post('/restaurants/:restaurant_id/edit', (req, res) => {
   const id = req.params.restaurant_id
-  const name = req.body.name
-  const phone = req.body.phone
-  const location = req.body.location
+  const {name,phone,location, isDone } = req.body
   return Rest.findById(id)
     .then(rest => {
       rest.name = name
       rest.phone = phone
       rest.location = location
+      rest.isDone = isDone === 'on'
       return rest.save()
     })
     .then(()=> res.redirect(`/restaurants/${id}`))
