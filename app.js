@@ -20,7 +20,11 @@ const Rest = require('./models/restaurant') //載入 restaurant  model
 
 // require express-handlebars here
 const exphbs = require('express-handlebars')
-//const restaurant = require('./models/restaurant')
+
+// 載入 method-override
+const methodOverride = require('method-override')
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 
 //body-parser
 app.use(express.urlencoded({ extended: true }))
@@ -77,7 +81,7 @@ app.get('/restaurants/:restaurant_id/edit', (req, res) => {
 })
 
 // 編輯單個餐廳_update
-app.post('/restaurants/:restaurant_id/edit', (req, res) => {
+app.put('/restaurants/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
   const {name,phone,location, isDone } = req.body
   return Rest.findById(id)
@@ -104,7 +108,7 @@ app.post('/restaurants/:restaurant_id/edit', (req, res) => {
 //})
 
 // 刪除
-app.post('/restaurants/:restaurant_id/delete', (req, res) => {
+app.delete('/restaurants/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
   return Rest.findById(id)
     .then(rest => rest.remove())
