@@ -21,13 +21,21 @@ const Rest = require('./models/restaurant') //載入 restaurant  model
 // require express-handlebars here
 const exphbs = require('express-handlebars')
 
+
+//body-parser
+app.use(express.urlencoded({ extended: true }))
+
 // 載入 method-override
 const methodOverride = require('method-override')
 // 設定每一筆請求都會透過 methodOverride 進行前置處理
 app.use(methodOverride('_method'))
 
-//body-parser
-app.use(express.urlencoded({ extended: true }))
+// 引用路由器
+const routes = require('./routes')
+// 將 request 導入路由器
+app.use(routes)
+
+
 
 // Template Engine
 app.engine('handlebars', exphbs({defaultLayout: 'main'}))
@@ -37,23 +45,10 @@ app.set('view engine', 'handlebars')
 // 靜態檔案(Bootstrap@4.6.1)
 app.use(express.static('public'))
 
-// 首頁_index
-app.get('/', (req, res) => {
-  Rest.find() // 取出 Rest model 裡所有的資料
-    .lean()
-    .sort({name: 'asc'})
-    .then(rests => res.render('index', {rests}))
-    .catch(error => console.error(error))
-})
-
-// 新增一筆資料＿路由導到 new
-app.get('/restaurants/new', (req, res) =>{
-  return res.render('new')
-})
 
 // 新增一筆資料＿接住資料表單送往資料庫
 app.post('/rests', (req, res) => {
-  // 從 req.body 拿出表單的資料
+  //從 req.body 拿出表單的資料
   const {id,name, name_en, category, image, location,phone, google_map, rating, description  } = req.body // 解構賦值：優化程式碼
   return Rest.create({id ,name, name_en, category,image, location, phone, google_map ,rating,description })// 存入資料庫
     .then(() => res.redirect('/'))// 新增完成後導回首頁
@@ -62,59 +57,8 @@ app.post('/rests', (req, res) => {
 
 
 
-// 單個餐廳_show
-app.get('/restaurants/:restaurant_id', (req, res) => {
-  const id = req.params.restaurant_id
-  return Rest.findById(id)
-    .lean()
-    .then((rest) => res.render('show', {rest}))
-    .catch(error => console.log(error))
-})
 
-// 編輯單個餐廳_edit
-app.get('/restaurants/:restaurant_id/edit', (req, res) => {
-  const id = req.params.restaurant_id
-  return Rest.findById(id)
-    .lean()
-    .then((rest) => res.render('edit', {rest}))
-    .catch(error => console.log(error))
-})
 
-// 編輯單個餐廳_update
-app.put('/restaurants/:restaurant_id', (req, res) => {
-  const id = req.params.restaurant_id
-  const {name,phone,location, isDone } = req.body
-  return Rest.findById(id)
-    .then(rest => {
-      rest.name = name
-      rest.phone = phone
-      rest.location = location
-      rest.isDone = isDone === 'on'
-      return rest.save()
-    })
-    .then(()=> res.redirect(`/restaurants/${id}`))
-    .catch(error => console.log(error))
-})
-
-// 搜尋
-//app.get('/search', (req, res) => 
-//  const keyword = req.query.keyword
-//  console.log(keyword)
-
-//  const restaurants = Rest.find(rests => {
-//    return rests.name.toLowerCase().includes(keyword.toLowerCase())
-//  })
-//  res.render('index', {restaurant: restaurants, keyword : keyword})
-//})
-
-// 刪除
-app.delete('/restaurants/:restaurant_id', (req, res) => {
-  const id = req.params.restaurant_id
-  return Rest.findById(id)
-    .then(rest => rest.remove())
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
 
 
 
