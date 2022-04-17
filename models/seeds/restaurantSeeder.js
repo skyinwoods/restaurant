@@ -1,5 +1,5 @@
 
-const resList = require('/Users/Chi/AC_2-3/restaurant/restaurant.json')
+const resList = require('../../restaurant.json')
 const Rest = require('../restaurant') //載入 restaurant  model
 const db = require('../../config/mongoose')
 
