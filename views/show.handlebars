@@ -3,11 +3,12 @@
 <div class="container">
   <div class="row">
     <div class="col-12 col-md-10 mx-auto">
-      <a href="/restaurants/{{rest._id}}/edit">edit</a>
-      <form action="/restaurants/{{ rest._id }}?_method=DELETE" method="POST" style="display: inline;">
-            <button type="submit">delete</button>
-      </form>
       <input type="checkbox" name="isDone" {{#if rest.isDone}} checked{{/if}} disabled>
+      <a class = 'btn btn-outline-info btn-sm' href="/restaurants/{{rest._id}}/edit">edit</a>
+      <form action="/restaurants/{{ rest._id }}?_method=DELETE" method="POST" style="display: inline;">
+            <button class = 'btn btn-outline-danger btn-sm' type="submit">delete</button>
+      </form>
+
       <p class="mb-1">
         <span class="text-secondary">
           <i class="fas fa-utensils pr-2"></i>

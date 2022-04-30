@@ -7,6 +7,8 @@ const exphbs = require('express-handlebars') // require express-handlebars here
 
 const methodOverride = require('method-override')// 載入 method-override
 const routes = require('./routes')// 引用路由器
+// 如果在 Heroku 環境
+const PORT = process.env.PORT || 3000
 
 require('./config/mongoose')
 
@@ -38,13 +40,7 @@ app.post('/rests', (req, res) => {
 })
 
 
-
-
-
-
-
-
-app.listen(port, () => {
-  console.log(`Express is listening on localhost: ${port}`)
+app.listen(PORT, () => {
+  console.log(`Express is listening on localhost: ${PORT}`)
 })
 
