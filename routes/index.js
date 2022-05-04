@@ -10,6 +10,5 @@ const rests = require('./modules/rests')
 // 將網址結構符合 /restaurant 字串開頭的 request 導向 restaurant 模組
 router.use('/restaurants', rests)
 
-
 // 匯出路由器
 module.exports = router

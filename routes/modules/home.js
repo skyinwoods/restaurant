@@ -10,33 +10,32 @@ router.get('/', (req, res) => {
   Rest.find() // 取出 Rest model 裡所有的資料
     .lean()
     .sort({ })
-    .then(rests => res.render('index', {rests}))
+    .then(rests => res.render('index', { rests }))
     .catch(error => console.error(error))
 })
 
 router.get('/:way', (req, res) => {
   const way = req.params.way
-  if (way === 'asc' | way === 'desc'){
+  if (way === 'asc' | way === 'desc') {
     console.log(req.params)
     Rest.find() // 取出 Rest model 裡所有的資料
       .lean()
-      .sort({ name: way})
-      .then(rests => res.render('index', {rests}))
+      .sort({ name: way })
+      .then(rests => res.render('index', { rests }))
       .catch(error => console.error(error))
-  }else if(way === 'category'){
+  } else if (way === 'category') {
     Rest.find()
       .lean()
-      .sort({ category: 'asc'})
-      .then(rests => res.render('index', {rests}))
+      .sort({ category: 'asc' })
+      .then(rests => res.render('index', { rests }))
       .catch(error => console.error(error))
-  }else{
+  } else {
     Rest.find()
       .lean()
-      .sort({ location: 'asc'})
-      .then(rests => res.render('index', {rests}))
+      .sort({ location: 'asc' })
+      .then(rests => res.render('index', { rests }))
       .catch(error => console.error(error))
   }
-  
 })
 
 // 匯出路由模組
